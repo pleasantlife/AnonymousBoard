@@ -2,10 +2,10 @@
   "name": "anonymousboard",
   "version": "0.0.1",
   "description": "Anonymous board",
-  "type": "module",
   "main": "src/app.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "dev": "pm2-dev start src/app.js",
     "start": "pm2 start src/app.js"
   },
@@ -31,7 +31,9 @@
     "eslint-config-airbnb-base": "15.0.0",
     "eslint-config-prettier": "8.5.0",
     "eslint-plugin-import": "2.26.0",
+    "jest": "28.1.0",
     "pm2": "5.2.0",
-    "prettier": "2.6.2"
+    "prettier": "2.6.2",
+    "supertest": "6.2.3"
   }
 }

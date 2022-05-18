@@ -1,9 +1,9 @@
 import 'dotenv/config';
-import express from 'express';
+import loadExpress from './expressLoader.js';
 
-const app = express();
+const app = loadExpress();
 const port = process.env.PORT;
 
 app.listen(port, () => {
-  console.log(`hello world ${port}`);
+  console.log(`Server running on ::: ${port}`);
 });
