@@ -18,7 +18,6 @@ export default (sequelize) => {
       },
     },
     {
-      sequelize,
       underscored: true,
       timestamps: true,
       createdAt: true,

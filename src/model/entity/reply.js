@@ -18,7 +18,7 @@ export default (sequelize) => {
       },
     },
     {
-      sequelize,
+      tableName: 'replies',
       underscored: true,
       timestamps: true,
       createdAt: true,

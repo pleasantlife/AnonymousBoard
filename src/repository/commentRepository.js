@@ -1,6 +1,6 @@
 import { db } from '../model/index.js';
 
-const { comments } = db;
+const { comments, replies } = db;
 
 export default {
   async paginatedComments(limit = 10, offset = 0) {
@@ -8,7 +8,12 @@ export default {
   },
 
   async commentsByPostId(postId, limit = 10, offset = 0) {
-    return await comments.findAndCountAll({ where: { postId }, limit, offset });
+    return await comments.findAndCountAll({
+      where: { postId },
+      limit,
+      offset,
+      include: [{ model: replies }],
+    });
   },
 
   async createNew(data) {
