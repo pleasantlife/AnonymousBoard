@@ -1,9 +1,11 @@
 import express from 'express';
-import userRouter from './router/userRouter.js';
+import postRouter from './router/postRouter.js';
 
 export default function loadExpress() {
   const app = express();
-  app.use('/user', userRouter);
+  app.use(express.json());
+  app.use(express.urlencoded({ extended: true }));
+  app.use('/post', postRouter);
   app.get('/health', (req, res) => {
     res.status(200).json({ status: 'alive!' });
   });
