@@ -2,7 +2,6 @@ import request from 'supertest';
 import loadExpress from '../src/expressLoader.js';
 
 let app;
-let commentId;
 
 beforeAll(() => {
   app = loadExpress();
@@ -36,6 +35,21 @@ describe('comment test', () => {
       .post('/comment/create')
       .set('Accept', 'application/json')
       .send(commentBody)
+      .expect(201);
+  });
+
+  it('create reply', async () => {
+    // --runInBand로 순차실행하여 위에서 comment를 한 개 생성
+    // 대댓글에서 parentId는 상위댓글의 id
+    const replyBody = {
+      body: 'test reply',
+      author: 'replytester',
+      parentId: 1,
+    };
+    await request(app)
+      .post('/comment/reply')
+      .set('Accept', 'application/json')
+      .send(replyBody)
       .expect(201);
   });
 });
