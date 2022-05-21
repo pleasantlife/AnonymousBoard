@@ -1,9 +1,9 @@
 import { DataTypes } from 'sequelize';
-import crypto from '../util/crypto.js';
+import crypto from '../../util/crypto.js';
 
-const Posts = (sequelize) => {
-  return sequelize.define(
-    'post',
+export default (sequelize) => {
+  const posts = sequelize.define(
+    'posts',
     {
       title: {
         type: DataTypes.STRING,
@@ -27,9 +27,14 @@ const Posts = (sequelize) => {
     },
     {
       sequelize,
+      underscored: true,
       timestamps: true,
     },
   );
+  posts.associate = (models) => {
+    posts.hasMany(models.comments, {
+      foreignKey: 'post_id',
+    });
+  };
+  return posts;
 };
-
-export default Posts;

@@ -1,17 +1,16 @@
 import 'dotenv/config';
+import createSchema from './createSchema.js';
 import loadExpress from './expressLoader.js';
-import db from './sequelizeLoader.js';
+import { sequelizeSync } from './model/index.js';
 
 const app = loadExpress();
 const port = process.env.PORT;
-const { sequelize } = db;
 
 async function init() {
-  await sequelize.query(
-    `CREATE SCHEMA IF NOT EXISTS ${process.env.SQL_SCHEMA} DEFAULT CHARACTER SET utf8mb4;`,
-  );
-  await sequelize.sync();
-
+  if (process.env.NODE_ENV !== 'production') {
+    await createSchema();
+    await sequelizeSync();
+  }
   app.listen(port, () => {
     console.log(`Server running on ::: ${port}`);
   });

@@ -1,30 +1,30 @@
-import db from '../sequelizeLoader.js';
+import { db } from '../model/index.js';
 
-const { Posts } = db;
+const { posts } = db;
 
 export default {
   async paginatedPosts(limit = 10, offset = 0) {
-    return await Posts.findAndCountAll({ limit, offset });
+    return await posts.findAndCountAll({ limit, offset });
   },
 
   async findByPostId(id) {
-    return await Posts.findByPk(id);
+    return await posts.findByPk(id);
   },
 
   async findWithWhere(condition) {
-    const includeCondition = Object.assign(condition, { include: [{ model: db.Comments }] });
-    return await Posts.findAndCountAll(includeCondition);
+    const includeCondition = Object.assign(condition, { include: [{ model: db.comments }] });
+    return await posts.findAndCountAll(includeCondition);
   },
 
   async createNew(data) {
-    return await Posts.create(data);
+    return await posts.create(data);
   },
 
   async updateOne(data) {
-    return await Posts.update(data.updateData, { where: data.where });
+    return await posts.update(data.updateData, { where: data.where });
   },
 
   async deleteOne(condition) {
-    return await Posts.destroy(condition);
+    return await posts.destroy(condition);
   },
 };

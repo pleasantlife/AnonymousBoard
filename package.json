@@ -39,7 +39,6 @@
     "jest": "28.1.0",
     "pm2": "5.2.0",
     "prettier": "2.6.2",
-    "sequelize-cli": "6.4.1",
     "supertest": "6.2.3"
   }
 }
