@@ -20,4 +20,10 @@ const db = {
 db.Post = Posts(sequelizeInit);
 db.Comment = Comments(sequelizeInit);
 
+db.Post.hasMany(db.Comment);
+db.Comment.belongsTo(db.Post);
+
+db.Comment.hasMany(db.Comment);
+db.Comment.belongsTo(db.Comment);
+
 export default db;

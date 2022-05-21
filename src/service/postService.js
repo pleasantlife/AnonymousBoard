@@ -1,19 +1,29 @@
+import Sequelize from 'sequelize';
 import postRepository from '../repository/postRepository.js';
 
 export default {
-  async getAllPosts() {
-    return await postRepository.findAll();
+  async getPaginatedPosts(limit, offset) {
+    return await postRepository.paginatedPosts(limit, offset);
   },
 
-  async getOnePost(conditionObject) {
-    return await postRepository.findOne(conditionObject);
+  async getFindPosts(type, keyword, limit = 10, offset = 0) {
+    return await postRepository.findWithWhere({
+      where: {
+        [type]: {
+          [Sequelize.Op.like]: `%${keyword}%`,
+        },
+      },
+      limit,
+      offset,
+    });
   },
 
-  async getItemsByUserId(userId) {
-    return await postRepository.findWithWhere({ id: userId });
-  },
-
-  async getItemsByUserName(userName) {
-    return await postRepository.findWithWhere({ name: userName });
+  async createPost(title, body, author, password) {
+    return await postRepository.createNew({
+      title,
+      body,
+      author,
+      password,
+    });
   },
 };

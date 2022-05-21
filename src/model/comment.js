@@ -4,18 +4,18 @@ const Comments = (sequelize) => {
   return sequelize.define(
     'comment',
     {
-      author: {
+      body: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      body: {
+      author: {
         type: DataTypes.STRING,
         allowNull: false,
       },
     },
     {
       sequelize,
-      timestamps: true,
+      createdAt: true,
     },
   );
 };

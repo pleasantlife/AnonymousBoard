@@ -1,4 +1,5 @@
 import { DataTypes } from 'sequelize';
+import crypto from '../util/crypto.js';
 
 const Posts = (sequelize) => {
   return sequelize.define(
@@ -19,6 +20,9 @@ const Posts = (sequelize) => {
       password: {
         type: DataTypes.STRING,
         allowNull: false,
+        set(value) {
+          this.setDataValue('password', crypto.encodingSHA256(value));
+        },
       },
     },
     {
