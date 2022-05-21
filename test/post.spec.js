@@ -14,14 +14,6 @@ describe('post api test', () => {
     await request(app).get('/post').expect(200);
   });
 
-  it('get all posts that find by title', async () => {
-    await request(app).get('/post').query({ type: 'title', keyword: 'hello' }).expect(200);
-  });
-
-  it('get all posts that find by author', async () => {
-    await request(app).get('/post').query({ type: 'author', keyword: 'hello' }).expect(200);
-  });
-
   it('make new post', async () => {
     const body = {
       title: 'make new post',
@@ -35,6 +27,14 @@ describe('post api test', () => {
       .send(body)
       .expect(201);
     postId = newPost.body.id;
+  });
+
+  it('get all posts that find by title', async () => {
+    await request(app).get('/post').query({ type: 'title', keyword: 'hello' }).expect(200);
+  });
+
+  it('get all posts that find by author', async () => {
+    await request(app).get('/post').query({ type: 'author', keyword: 'hello' }).expect(200);
   });
 
   it('update post', async () => {

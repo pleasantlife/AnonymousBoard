@@ -1,6 +1,7 @@
 import Sequelize from 'sequelize';
 import comments from './entity/comment.js';
 import posts from './entity/post.js';
+import replies from './entity/reply.js';
 
 const sequelize = new Sequelize(
   process.env.SQL_DB_NAME,
@@ -23,6 +24,7 @@ associate();
 function initEntity() {
   db.posts = posts(sequelize);
   db.comments = comments(sequelize);
+  db.replies = replies(sequelize);
 }
 
 function associate() {

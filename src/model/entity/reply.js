@@ -1,8 +1,8 @@
 import { DataTypes } from 'sequelize';
 
 export default (sequelize) => {
-  const comments = sequelize.define(
-    'comments',
+  const reply = sequelize.define(
+    'replies',
     {
       body: {
         type: DataTypes.STRING,
@@ -12,7 +12,7 @@ export default (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      postId: {
+      parentId: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
@@ -25,10 +25,9 @@ export default (sequelize) => {
       updatedAt: false,
     },
   );
-  comments.associate = (models) => {
-    comments.belongsTo(models.posts, { foreignKey: 'post_id', onDelete: 'cascade' });
-    comments.hasMany(models.replies, { foreignKey: 'parent_id', onDelete: 'cascade' });
+  reply.associate = (models) => {
+    reply.belongsTo(models.comments, { foreignKey: 'parent_id', onDelete: 'cascade' });
   };
 
-  return comments;
+  return reply;
 };

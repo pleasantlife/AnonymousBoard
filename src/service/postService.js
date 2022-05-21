@@ -1,21 +1,26 @@
 import Sequelize from 'sequelize';
 import postRepository from '../repository/postRepository.js';
+import paginationUtil from '../util/paginationUtil.js';
 
 export default {
-  async getPaginatedPosts(limit, offset) {
-    return await postRepository.paginatedPosts(limit, offset);
+  async getPaginatedPosts(limit = 10, page = 0) {
+    const { currentPage, offset } = paginationUtil.paginationValues(limit, page);
+    const data = await postRepository.paginatedPosts(Number(limit), Number(offset));
+    return paginationUtil.paginatedData(data, currentPage, limit);
   },
 
-  async getFindPosts(type, keyword, limit = 10, offset = 0) {
-    return await postRepository.findWithWhere({
+  async getFindPosts(type, keyword, limit = 10, page = 0) {
+    const { currentPage, offset } = paginationUtil.paginationValues(limit, page);
+    const data = await postRepository.findWithWhere({
       where: {
         [type]: {
           [Sequelize.Op.like]: `%${keyword}%`,
         },
       },
-      limit,
-      offset,
+      limit: Number(limit),
+      offset: Number(offset),
     });
+    return paginationUtil.paginatedData(data, currentPage, limit);
   },
 
   async createPost(title, body, author, password) {
@@ -31,7 +36,7 @@ export default {
     return await postRepository.findByPostId(postId);
   },
 
-  async updatePost(postId, updateData) {
+  async updatePostById(postId, updateData) {
     const data = {
       updateData,
       where: { id: postId },

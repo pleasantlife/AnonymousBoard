@@ -1,10 +1,10 @@
 import { db } from '../model/index.js';
 
-const { posts } = db;
+const { posts, comments } = db;
 
 export default {
   async paginatedPosts(limit = 10, offset = 0) {
-    return await posts.findAndCountAll({ limit, offset });
+    return await posts.findAndCountAll({ limit, offset, include: [{ model: comments }] });
   },
 
   async findByPostId(id) {
@@ -12,7 +12,7 @@ export default {
   },
 
   async findWithWhere(condition) {
-    const includeCondition = Object.assign(condition, { include: [{ model: db.comments }] });
+    const includeCondition = Object.assign(condition, { include: [{ model: comments }] });
     return await posts.findAndCountAll(includeCondition);
   },
 

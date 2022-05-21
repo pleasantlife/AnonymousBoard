@@ -34,6 +34,7 @@ export default (sequelize) => {
   posts.associate = (models) => {
     posts.hasMany(models.comments, {
       foreignKey: 'post_id',
+      onDelete: 'cascade',
     });
   };
   return posts;
