@@ -17,7 +17,6 @@ export default {
   },
 
   async createNew(data) {
-    console.log('data::', data);
     return await comments.create(data);
   },
 
