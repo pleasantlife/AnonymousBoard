@@ -20,11 +20,11 @@ export default {
     return await comments.create(data);
   },
 
-  // async updateOne(data) {
-  //   return await comments.update(data.updateData, { where: data.where });
-  // },
+  async updateOne(data) {
+    return await comments.update(data.updateData, { where: data.where });
+  },
 
-  // async deleteOne(condition) {
-  //   return await comments.destroy(condition);
-  // },
+  async deleteOne(condition) {
+    return await comments.destroy(condition);
+  },
 };

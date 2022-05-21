@@ -48,6 +48,13 @@ describe('post api test', () => {
   });
 
   it('delete post', async () => {
-    await request(app).delete(`/post/${postId}`).expect(200);
+    const body = {
+      password: 'postpassword',
+    };
+    await request(app)
+      .delete(`/post/${postId}`)
+      .set('Accept', 'application/json')
+      .send(body)
+      .expect(200);
   });
 });

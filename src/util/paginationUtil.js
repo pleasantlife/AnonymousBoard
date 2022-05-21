@@ -7,7 +7,7 @@ export default {
   },
 
   paginatedData({ count, rows }, currentPage, limit) {
-    const totalPage = Number(Math.ceil(count / limit));
-    return { data: rows, currentPage, totalPage, totalCount: count };
+    const lastPage = Number(Math.ceil(count / limit));
+    return { data: rows, currentPage, lastPage, totalCount: count };
   },
 };

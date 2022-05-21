@@ -1,0 +1,227 @@
+openapi: '3.0.0'
+info:
+  version: 1.0.0
+  title: anonymous board
+  description: A bulletin board where you can write posts or comments anonymously
+  license:
+    name: MIT
+servers:
+  - url: http://localhost:3000/
+paths:
+  /post:
+    get:
+      tags:
+        - post
+      summary: get posts
+      description: get posts
+      parameters:
+        - in: query
+          name: type
+          schema:
+            type: string
+          description: 검색 조건 선택(title은 제목, author는 작성자)
+          required: false
+          example: author
+        - in: query
+          name: keyword
+          schema:
+            type: string
+          description: 검색어
+          required: false
+          example: Kim
+        - in: query
+          name: limit
+          schema:
+            type: number
+          description: 한 페이지 당 보여지는 아이템의 수
+          required: false
+          example: 10
+        - in: query
+          name: page
+          schema:
+            type: number
+          description: 조회할 페이지 번호
+          required: false
+          example: 1
+      responses:
+        200:
+          description: 조회 성공
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: number
+                        description: 게시물의 고유 id
+                        example: 1
+                      title:
+                        type: string
+                        description: 게시물 제목
+                        example: test
+                      body:
+                        type: string
+                        description: 게시물 내용
+                        example: test body
+                      author:
+                        type: string
+                        description: 작성자명
+                        example: writer
+                      password:
+                        type: string
+                        description: 암호화된 비밀번호
+                        example: 635120c511a1ad2381af17998b
+                      createdAt:
+                        type: string
+                        description: 게시물 생성 시각 (UTC)
+                        example: 2022-05-21T18:15:20.000Z
+                      updatedAt:
+                        type: string
+                        description: 게시물 마지막 수정 시각 (UTC)
+                        example: 2022-05-21T18:15:20.000Z
+                  currentPage:
+                    type: number
+                    description: 현재 조회한 페이지 번호
+                    example: 1
+                  lastPage:
+                    type: number
+                    description: 마지막 페이지 번호
+                    example: 10
+                  totalCount:
+                    type: number
+                    description: 검색 조건으로 조회된 게시물의 전체 개수
+                    example: 100
+        500:
+          description: 기타 서버 에러
+  /post/create:
+    post:
+      tags:
+        - post
+      summary: 새 게시물 등록
+      description: 새 게시물을 등록합니다.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: 게시물 제목
+                  example: new post
+                  required: true
+                body:
+                  type: string
+                  description: 게시물 내용
+                  example: new post upload
+                  required: true
+                author:
+                  type: string
+                  description: 작성자명
+                  required: true
+                password:
+                  type: string
+                  description: 비밀번호
+                  required: true
+      responses:
+        201:
+          description: 등록 성공
+        500:
+          description: 기타 서버 에러
+  /post/{id}:
+    get:
+      tags:
+        - post
+      summary: 특정 포스트 조회
+      description: path 파라미터의 id를 통해 특정 포스트를 조회합니다.
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: number
+          example: 1
+      responses:
+        200:
+          description: 조회 성공
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: number
+                    description: 게시물의 고유 id
+                    example: 1
+                  title:
+                    type: string
+                    description: 게시물 제목
+                    example: first post
+                  body:
+                    type: string
+                    description: 게시물 내용
+                    example: hello this is first post
+                  author:
+                    type: string
+                    description: 작성자명
+                    example: writer
+                  password:
+                    type: string
+                    description: 비밀번호
+                    example: 635120c511a1ad2381af17998b
+                  createdAt:
+                    type: string
+                    description: 게시물 생성 시각 (UTC)
+                    example: 2022-05-21T18:15:20.000Z
+                  updatedAt:
+                    type: string
+                    description: 게시물 마지막 수정 시각 (UTC)
+                    example: 2022-05-21T18:15:20.000Z
+                  comments:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                          description: 댓글의 고유 id
+                          example: 1
+                        body:
+                          type: string
+                          description: 댓글 내용
+                          example: comment
+                        author:
+                          type: string
+                          description: 댓글 작성자
+                          example: commenter
+                        postId:
+                          type: number
+                          description: 댓글을 작성한 게시물의 고유 id
+                          example: 1
+                        replies:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              id:
+                                type: number
+                                description: 대댓글의 고유 id
+                                example: 1
+                              body:
+                                type: string
+                                description: 대댓글 내용
+                                example: its reply
+                              author:
+                                type: string
+                                description: 대댓글 작성자명
+                                example: author2
+                              parentId:
+                                type: number
+                                description: 대댓글을 작성한 댓글의 고유 id
+                                example: 1
+                              createdAt:
+                                type: string
+                                description: 대댓글 작성 시각 (UTC)
+                                example: 2022-05-21T18:25:30.000Z

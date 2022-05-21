@@ -5,7 +5,7 @@ import crypto from '../util/crypto.js';
 export default {
   async getPostById(req, res) {
     try {
-      const result = await postService.findByPostById(req.params.id);
+      const result = await postService.findByPostById(Number(req.params.id));
       res.status(200).json(result);
     } catch (err) {
       res.status(500).json({ message: err.message });
@@ -58,6 +58,11 @@ export default {
 
   async deletePost(req, res) {
     try {
+      const targetPost = await postService.findByPostById(req.params.id);
+      if (crypto.encodingSHA256(req.body.password) !== targetPost.password) {
+        res.status(403).json({ message: 'wrong password' });
+        return;
+      }
       await postService.deletePostById(req.params.id);
       res.status(200).json({ message: 'success' });
     } catch (err) {

@@ -2,6 +2,7 @@ import cors from 'cors';
 import express from 'express';
 import commentRouter from './router/commentRouter.js';
 import postRouter from './router/postRouter.js';
+import swaggerRouter from './router/swaggerRouter.js';
 
 export default function loadExpress() {
   const app = express();
@@ -10,6 +11,7 @@ export default function loadExpress() {
   app.use(express.urlencoded({ extended: true }));
   app.use('/post', postRouter);
   app.use('/comment', commentRouter);
+  app.use('/api-docs', swaggerRouter);
   app.get('/health', (req, res) => {
     res.status(200).json({ status: 'alive!' });
   });
