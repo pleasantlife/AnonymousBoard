@@ -5,7 +5,7 @@ export default {
   async getComments(req, res) {
     try {
       let result;
-      if (_.isNil(req.query.type) || _.isNil(req.query.postid)) {
+      if (_.isNil(req.query.postid)) {
         result = await commentService.getPaginatedComments(req.query.limit, req.query.page);
       } else {
         result = await commentService.getCommentsByPostId(
