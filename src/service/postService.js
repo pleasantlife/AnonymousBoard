@@ -26,4 +26,23 @@ export default {
       password,
     });
   },
+
+  async findByPostById(postId) {
+    return await postRepository.findByPostId(postId);
+  },
+
+  async updatePost(postId, updateData) {
+    const data = {
+      updateData,
+      where: { id: postId },
+    };
+    return await postRepository.updateOne(data);
+  },
+
+  async deletePostById(postId) {
+    const condition = {
+      where: { id: postId },
+    };
+    return await postRepository.deleteOne(condition);
+  },
 };

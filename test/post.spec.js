@@ -1,7 +1,9 @@
+import assert from 'assert';
 import request from 'supertest';
 import loadExpress from '../src/expressLoader.js';
 
 let app;
+let postId;
 
 beforeAll(() => {
   app = loadExpress();
@@ -27,10 +29,25 @@ describe('post api test', () => {
       body: 'This post made by supertest',
       password: 'postpassword',
     };
-    await request(app)
+    const newPost = await request(app)
       .post('/post/create')
       .set('Accept', 'application/json')
       .send(body)
       .expect(201);
+    postId = newPost.body.id;
+  });
+
+  it('update post', async () => {
+    const updateData = {
+      body: 'update post',
+      password: 'postpassword',
+    };
+    await request(app).put(`/post/${postId}`).set('Accept', 'application/json').send(updateData);
+    const targetPost = await request(app).get(`/post/${postId}`).expect(200);
+    assert.equal(targetPost.body.body, updateData.body);
+  });
+
+  it('delete post', async () => {
+    await request(app).delete(`/post/${postId}`).expect(200);
   });
 });
