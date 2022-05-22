@@ -4,6 +4,8 @@ import keywordSubscribers from './entity/keywordSubscriber.js';
 import posts from './entity/post.js';
 import replies from './entity/reply.js';
 
+const useLogging = process.env.NODE_ENV !== 'development' ? console.log : false;
+
 const sequelize = new Sequelize(
   process.env.SQL_DB_NAME,
   process.env.SQL_USER,
@@ -11,6 +13,7 @@ const sequelize = new Sequelize(
   {
     host: process.env.HOST,
     dialect: 'mysql',
+    logging: useLogging,
   },
 );
 
