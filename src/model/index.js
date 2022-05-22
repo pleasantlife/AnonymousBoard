@@ -1,5 +1,6 @@
 import Sequelize from 'sequelize';
 import comments from './entity/comment.js';
+import keywordSubscribers from './entity/keywordSubscriber.js';
 import posts from './entity/post.js';
 import replies from './entity/reply.js';
 
@@ -25,6 +26,7 @@ function initEntity() {
   db.posts = posts(sequelize);
   db.comments = comments(sequelize);
   db.replies = replies(sequelize);
+  db.keywordSubscribers = keywordSubscribers(sequelize);
 }
 
 function associate() {

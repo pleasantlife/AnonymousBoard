@@ -1,7 +1,11 @@
 import request from 'supertest';
 import loadExpress from '../src/expressLoader.js';
 
-const app = loadExpress();
+let app;
+
+beforeAll(() => {
+  app = loadExpress();
+});
 
 describe('user test', () => {
   it('health check test', async () => {

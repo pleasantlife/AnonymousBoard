@@ -5,7 +5,7 @@ export default (sequelize) => {
     'comments',
     {
       body: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: false,
       },
       author: {
@@ -22,6 +22,8 @@ export default (sequelize) => {
       timestamps: true,
       createdAt: true,
       updatedAt: false,
+      charset: 'utf8mb4',
+      collate: 'utf8mb4_general_ci',
     },
   );
   comments.associate = (models) => {

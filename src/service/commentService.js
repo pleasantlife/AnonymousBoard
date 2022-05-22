@@ -1,5 +1,6 @@
 import commentRepository from '../repository/commentRepository.js';
 import paginationUtil from '../util/paginationUtil.js';
+import keywordSubscriberService from './keywordSubscriberService.js';
 
 export default {
   async getPaginatedComments(limit = 10, page = 0) {
@@ -15,6 +16,7 @@ export default {
   },
 
   async createComment(data) {
-    return await commentRepository.createNew(data);
+    await commentRepository.createNew(data);
+    await keywordSubscriberService.sendKeywordAlarm(data.body);
   },
 };

@@ -1,6 +1,7 @@
 import Sequelize from 'sequelize';
 import postRepository from '../repository/postRepository.js';
 import paginationUtil from '../util/paginationUtil.js';
+import keywordSubscriberService from './keywordSubscriberService.js';
 
 export default {
   async getPaginatedPosts(limit = 10, page = 0) {
@@ -24,12 +25,13 @@ export default {
   },
 
   async createPost(title, body, author, password) {
-    return await postRepository.createNew({
+    await postRepository.createNew({
       title,
       body,
       author,
       password,
     });
+    await keywordSubscriberService.sendKeywordAlarm(body);
   },
 
   async findByPostById(postId) {

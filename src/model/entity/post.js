@@ -14,7 +14,7 @@ export default (sequelize) => {
         allowNull: false,
       },
       author: {
-        type: DataTypes.TEXT,
+        type: DataTypes.STRING,
         allowNull: false,
       },
       password: {
@@ -28,6 +28,8 @@ export default (sequelize) => {
     {
       underscored: true,
       timestamps: true,
+      charset: 'utf8mb4',
+      collate: 'utf8mb4_general_ci',
     },
   );
   posts.associate = (models) => {
