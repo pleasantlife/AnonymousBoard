@@ -5,13 +5,13 @@ import keywordSubscriberService from './keywordSubscriberService.js';
 export default {
   async getPaginatedComments(limit = 10, page = 0) {
     const { currentPage, offset } = paginationUtil.paginationValues(limit, page);
-    const data = await commentRepository.paginatedComments(Number(limit), Number(offset));
+    const data = await commentRepository.paginatedComments(limit, offset);
     return paginationUtil.paginatedData(data, currentPage, limit);
   },
 
   async getCommentsByPostId(postId, limit = 10, page = 0) {
     const { currentPage, offset } = paginationUtil.paginationValues(limit, page);
-    const data = await commentRepository.commentsByPostId(postId, Number(limit), Number(offset));
+    const data = await commentRepository.commentsByPostId(postId, limit, offset);
     return paginationUtil.paginatedData(data, currentPage, limit);
   },
 

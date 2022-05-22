@@ -6,7 +6,7 @@ import keywordSubscriberService from './keywordSubscriberService.js';
 export default {
   async getPaginatedPosts(limit = 10, page = 0) {
     const { currentPage, offset } = paginationUtil.paginationValues(limit, page);
-    const data = await postRepository.paginatedPosts(Number(limit), Number(offset));
+    const data = await postRepository.paginatedPosts(limit, offset);
     return paginationUtil.paginatedData(data, currentPage, limit);
   },
 
@@ -18,20 +18,21 @@ export default {
           [Sequelize.Op.like]: `%${keyword}%`,
         },
       },
-      limit: Number(limit),
-      offset: Number(offset),
+      limit,
+      offset,
     });
     return paginationUtil.paginatedData(data, currentPage, limit);
   },
 
   async createPost(title, body, author, password) {
-    await postRepository.createNew({
+    const result = await postRepository.createNew({
       title,
       body,
       author,
       password,
     });
     await keywordSubscriberService.sendKeywordAlarm(body);
+    return result;
   },
 
   async findByPostById(postId) {

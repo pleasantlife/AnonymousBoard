@@ -31,6 +31,7 @@
     "joi": "17.6.0",
     "lodash": "4.17.21",
     "mysql2": "2.3.3",
+    "schema-inspector": "2.0.1",
     "sequelize": "6.19.2",
     "swagger-ui-express": "4.4.0",
     "yamljs": "0.3.0"
