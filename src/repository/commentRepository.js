@@ -4,7 +4,7 @@ const { comments, replies } = db;
 
 export default {
   async paginatedComments(limit = 10, offset = 0) {
-    return await comments.findAndCountAll({ limit, offset });
+    return await comments.findAndCountAll({ limit, offset, include: [{ model: replies }] });
   },
 
   async commentsByPostId(postId, limit = 10, offset = 0) {

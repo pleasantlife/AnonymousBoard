@@ -18,10 +18,12 @@
 
 ## 설치 및 동작 방법
 
-- nvm use (nvm이 설치 되어 있을 경우.)
-- npm install
-- npm run dev (development 환경)
-- npm run start (production 환경)
+0. nvm use (nvm이 설치 되어 있을 경우)
+1. npm install
+2. npm run
+   2-1. npm run dev (development 환경)
+   2-2. npm run start (production 환경)
+   2-3. npm run test (jest ci test 수행)
 
 ## API 문서 (Swagger)
 
