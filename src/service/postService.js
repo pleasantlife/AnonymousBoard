@@ -35,7 +35,7 @@ export default {
     return result;
   },
 
-  async findByPostById(postId) {
+  async findPostById(postId) {
     return await postRepository.findByPostId(postId);
   },
 
