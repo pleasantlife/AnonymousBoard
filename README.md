@@ -22,10 +22,13 @@
 
 0. nvm use (nvm이 설치 되어 있을 경우)
 1. npm install
-2. npm run
+2. npm run db-up (mysql 도커 구동)
+3. npm run
    2-1. npm run dev (development 환경)
    2-2. npm run start (production 환경)
    2-3. npm run test (jest ci test 수행)
+
+- 테스트 종료 후 docker mysql 종료를 하려면 npm run db-down 명령 실행
 
 ## API 문서 (Swagger)
 

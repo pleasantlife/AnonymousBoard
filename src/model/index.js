@@ -7,9 +7,9 @@ import replies from './entity/reply.js';
 const useLogging = process.env.NODE_ENV !== 'development' ? console.log : false;
 
 const sequelize = new Sequelize(
-  process.env.SQL_DB_NAME,
-  process.env.SQL_USER,
-  process.env.SQL_PASSWORD,
+  process.env.MYSQL_DATABASE,
+  process.env.MYSQL_USER,
+  process.env.MYSQL_PASSWORD,
   {
     host: process.env.HOST,
     dialect: 'mysql',
